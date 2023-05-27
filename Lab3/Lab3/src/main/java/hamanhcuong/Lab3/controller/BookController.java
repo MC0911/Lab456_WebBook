@@ -39,30 +39,23 @@ public class BookController {
         bookService.addBook(book);
         return "redirect:/books";
     }
-//    @GetMapping("/edit/{id}")
-//    public String editBookForm (@PathVariable("id") Long id, Model model)
-//    {
-//        Book editBook = null;
-//        Book book = bookService.getBookById(id);
-//        if (book.getId().equals(id)) {
-//            editBook = book;
-//        }
-//        if (editBook != null)
-//        {
-//            model.addAttribute("book",editBook);
-//            model.addAttribute("categories", categoryService.getCategoryById(id));
-//            return "book/edit";
-//        } else {
-//            return "not-found";
-//        }
-//    }
-//
-//    @PostMapping("/edit")
-//    public String editBook (@ModelAttribute("book") Book book)
-//    {
-//        bookService.updateBook(book);
-//        return "redirect:/books";
-//    }
+    @GetMapping("/edit/{id}")
+    public String editBookForm (@PathVariable("id") Long id, Model model) {
+        Book editBook = bookService.getBookById(id);
+        if (editBook != null) {
+            model.addAttribute("book", editBook);
+            model.addAttribute("categories", categoryService.getAllCategories());
+            return "book/edit";
+        }else {
+            return "not-found";
+        }
+    }
+
+    @PostMapping("/edit")
+    public String editBook (@ModelAttribute("book") Book book) {
+        bookService.updateBook(book);
+        return "redirect:/books";
+    }
     @GetMapping("/delete/{id}")
     public String deleteBook (@PathVariable("id") Long id)
     {
